@@ -41,6 +41,7 @@ public class RequestFilter implements Filter {
         Map<String, String[]> paramsMap = request.getParameterMap();
         if (paramsMap != null && !paramsMap.isEmpty()) {
             for (Map.Entry<String, String[]> entry : paramsMap.entrySet()) {
+                // 请求参数
                 params += entry.getKey() + ":" + StringUtils.arrayToDelimitedString(entry.getValue(), ",") + ";";
             }
         }
@@ -50,6 +51,7 @@ public class RequestFilter implements Filter {
         } catch (Throwable e) {
             throw e;
         } finally {
+            // 打印日志 路径、耗时、参数
             long cost = System.currentTimeMillis() - start;
             logger.info("request filter path={}, cost={}, params={}", request.getServletPath(), cost, params);
         }

@@ -2,6 +2,8 @@ package com.xiaoju.uemc.tinyid.base.entity;
 
 /**
  * @author du_imba
+ *
+ * 号段id 状态
  */
 public class  ResultCode {
 

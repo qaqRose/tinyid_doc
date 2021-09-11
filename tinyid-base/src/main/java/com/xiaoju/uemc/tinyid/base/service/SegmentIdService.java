@@ -4,6 +4,8 @@ import com.xiaoju.uemc.tinyid.base.entity.SegmentId;
 
 /**
  * @author du_imba
+ * 号段id服务
+ * 有两种实现，DB实现和HTTP实现
  */
 public interface SegmentIdService {
 

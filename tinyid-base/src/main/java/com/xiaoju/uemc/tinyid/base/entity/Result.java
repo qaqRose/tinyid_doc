@@ -2,8 +2,14 @@ package com.xiaoju.uemc.tinyid.base.entity;
 
 /**
  * @author du_imba
+ *
+ * id结果
  */
 public class Result {
+    /**
+     * 传递号段状态
+     * @see ResultCode
+     */
     private int code;
     private long id;
 

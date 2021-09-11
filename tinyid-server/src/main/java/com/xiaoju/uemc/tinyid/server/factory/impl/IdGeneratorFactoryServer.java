@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author du_imba
+ *
+ * 服务端 id生成器工厂
  */
 @Component
 public class IdGeneratorFactoryServer extends AbstractIdGeneratorFactory {

@@ -5,13 +5,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author du_imba
+ *
+ * 简单封装 线程工程
+ * 配置自定义名称的线程名称
  */
 public class NamedThreadFactory implements ThreadFactory {
 
+    /**
+     * 线程组
+     */
     private final ThreadGroup group;
+
+    /**
+     * 工厂生成现成的数量
+     */
     private final AtomicInteger threadNumber = new AtomicInteger(1);
 
+    /**
+     * 名称前缀
+     */
     private final String namePrefix;
+    /**
+     * 是否为守护线程
+     */
     private final boolean daemon;
 
     public NamedThreadFactory(String namePrefix, boolean daemon) {
