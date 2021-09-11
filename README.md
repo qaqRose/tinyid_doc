@@ -1,3 +1,16 @@
+## 说明
+本项目为tinyid的注释版
+代码比较简单，加上代码注释方便学习
+原项目链接地址： https://github.com/didi/tinyid
+
+## 与原版区别
+
+1. 增加注释
+2. 引入文档工具(knife4j)，方便web测试
+3. 增加测试用例
+
+
+
 ## Tinyid
 [![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/tinyid/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/didi/tinyid/pulls)
