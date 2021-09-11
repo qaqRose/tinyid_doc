@@ -18,6 +18,8 @@ public class Result {
         this.id = id;
     }
 
+    // ========================  getter setter ToString 分割线 ========================
+
     public int getCode() {
         return code;
     }

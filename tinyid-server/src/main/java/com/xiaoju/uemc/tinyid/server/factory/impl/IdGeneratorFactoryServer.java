@@ -18,12 +18,15 @@ import org.springframework.stereotype.Component;
 public class IdGeneratorFactoryServer extends AbstractIdGeneratorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(CachedIdGenerator.class);
+
+    // DB实现的号端服务
     @Autowired
     private SegmentIdService tinyIdService;
 
     @Override
     public IdGenerator createIdGenerator(String bizType) {
         logger.info("createIdGenerator :{}", bizType);
+        // 实例一个id缓存生成器
         return new CachedIdGenerator(bizType, tinyIdService);
     }
 }

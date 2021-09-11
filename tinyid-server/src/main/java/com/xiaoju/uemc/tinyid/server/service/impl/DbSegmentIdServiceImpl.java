@@ -18,6 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author du_imba
+ *
+ * 数据库号段id服务
  */
 @Component
 public class DbSegmentIdServiceImpl implements SegmentIdService {
@@ -34,6 +36,8 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
      * 如果是REPEATABLE_READ，那么在本次事务中循环调用tinyIdInfoDAO.queryByBizType(bizType)获取的结果是没有变化的，也就是查询不到别的事务提交的内容
      * 所以多次调用tinyIdInfoDAO.updateMaxId也就不会成功
      *
+     * 从数据获取分段，并更新最大id
+     * 如果失败，会重试三次
      * @param bizType
      * @return
      */
@@ -46,8 +50,10 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
             if (tinyIdInfo == null) {
                 throw new TinyIdSysException("can not find biztype:" + bizType);
             }
+            // 最大值 == 当前最大值 + 步长
             Long newMaxId = tinyIdInfo.getMaxId() + tinyIdInfo.getStep();
             Long oldMaxId = tinyIdInfo.getMaxId();
+            // 更新最大值
             int row = tinyIdInfoDAO.updateMaxId(tinyIdInfo.getId(), newMaxId, oldMaxId, tinyIdInfo.getVersion(),
                     tinyIdInfo.getBizType());
             if (row == 1) {
@@ -62,8 +68,14 @@ public class DbSegmentIdServiceImpl implements SegmentIdService {
         throw new TinyIdSysException("get next segmentId conflict");
     }
 
+    /**
+     * 装换实体
+     * @param idInfo
+     * @return
+     */
     public SegmentId convert(TinyIdInfo idInfo) {
         SegmentId segmentId = new SegmentId();
+        // 上面 +步长更新到数据库，这里减回来
         segmentId.setCurrentId(new AtomicLong(idInfo.getMaxId() - idInfo.getStep()));
         segmentId.setMaxId(idInfo.getMaxId());
         segmentId.setRemainder(idInfo.getRemainder() == null ? 0 : idInfo.getRemainder());

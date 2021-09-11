@@ -68,6 +68,7 @@ public class CachedIdGenerator implements IdGenerator {
     private SegmentId querySegmentId() {
         String message = null;
         try {
+            // 服务端使用是DB， 客户端使用client
             SegmentId segmentId = segmentIdService.getNextSegmentId(bizType);
             if (segmentId != null) {
                 return segmentId;

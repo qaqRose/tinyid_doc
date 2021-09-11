@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * @author du_imba
+ * id信息dao
+ *
  */
 @Repository
 public class TinyIdInfoDAOImpl implements TinyIdInfoDAO {
@@ -20,6 +22,12 @@ public class TinyIdInfoDAOImpl implements TinyIdInfoDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 通过bizType查询tiny_id_info表数据
+     * biz_type唯一
+     * @param bizType 业务类型
+     * @return
+     */
     @Override
     public TinyIdInfo queryByBizType(String bizType) {
         String sql = "select id, biz_type, begin_id, max_id," +
@@ -32,6 +40,15 @@ public class TinyIdInfoDAOImpl implements TinyIdInfoDAO {
         return list.get(0);
     }
 
+    /**
+     * 更新最大值
+     * @param id 主键
+     * @param newMaxId 新最大值
+     * @param oldMaxId 老最大id
+     * @param version 乐观锁
+     * @param bizType 业务类型
+     * @return
+     */
     @Override
     public int updateMaxId(Long id, Long newMaxId, Long oldMaxId, Long version, String bizType) {
         String sql = "update tiny_id_info set max_id= ?," +

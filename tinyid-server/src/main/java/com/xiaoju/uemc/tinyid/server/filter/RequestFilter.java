@@ -20,6 +20,8 @@ import java.util.Map;
 
 /**
  * @Author du_imba
+ *
+ * servlet 过滤器
  */
 @Component
 @ServletComponentScan
@@ -33,6 +35,15 @@ public class RequestFilter implements Filter {
 
     }
 
+    /**
+     * 主要是 打印日志用途
+     * 打印日志 路径、耗时、参数
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;

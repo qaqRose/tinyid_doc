@@ -76,7 +76,7 @@ public class IdController {
     }
 
     /**
-     * 检查批次舒朗
+     * 检查批次数量
      * 控制范围在 [1, batchSizeMax]
      * @param batchSize
      * @return
@@ -91,6 +91,20 @@ public class IdController {
         return batchSize;
     }
 
+    /**
+     * 与nextId类似，这是返回结果不用Response包装
+     * 方便业务直接使用， 不用json解析
+     * @param bizType 业务类型
+     * @param batchSize 批量数量
+     * @param token 令牌
+     * @return
+     */
+    @ApiOperation("获取下一个id(直接)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "bizType", value = "业务类型", defaultValue = "test", required = true),
+            @ApiImplicitParam(name = "batchSize", value = "id数量", defaultValue = "10000"),
+            @ApiImplicitParam(name = "token", value = "令牌", defaultValue = "0f673adf80504e2eaa552f5d791b644c", required = true)
+    })
     @RequestMapping("nextIdSimple")
     public String nextIdSimple(String bizType, Integer batchSize, String token) {
         Integer newBatchSize = checkBatchSize(batchSize);
@@ -106,6 +120,7 @@ public class IdController {
                 response = id + "";
             } else {
                 List<Long> idList = idGenerator.nextId(newBatchSize);
+                // 批量id用逗号分隔
                 StringBuilder sb = new StringBuilder();
                 for (Long id : idList) {
                     sb.append(id).append(",");
@@ -118,15 +133,28 @@ public class IdController {
         return response;
     }
 
+    /**
+     * 获取号段id
+     * @param bizType
+     * @param token
+     * @return
+     */
+    @ApiOperation("获取号段")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "bizType", value = "业务类型", defaultValue = "test", required = true),
+            @ApiImplicitParam(name = "token", value = "令牌", defaultValue = "0f673adf80504e2eaa552f5d791b644c", required = true)
+    })
     @RequestMapping("nextSegmentId")
     public Response<SegmentId> nextSegmentId(String bizType, String token) {
         Response<SegmentId> response = new Response<>();
+        // 验证token
         if (!tinyIdTokenService.canVisit(bizType, token)) {
             response.setCode(ErrorCode.TOKEN_ERR.getCode());
             response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
+            // 获取数据库的下一个号段信息
             SegmentId segmentId = segmentIdService.getNextSegmentId(bizType);
             response.setData(segmentId);
         } catch (Exception e) {
@@ -137,6 +165,12 @@ public class IdController {
         return response;
     }
 
+
+    @ApiOperation("获取号段(直接，无封装)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "bizType", value = "业务类型", defaultValue = "test", required = true),
+            @ApiImplicitParam(name = "token", value = "令牌", defaultValue = "0f673adf80504e2eaa552f5d791b644c", required = true)
+    })
     @RequestMapping("nextSegmentIdSimple")
     public String nextSegmentIdSimple(String bizType, String token) {
         if (!tinyIdTokenService.canVisit(bizType, token)) {
