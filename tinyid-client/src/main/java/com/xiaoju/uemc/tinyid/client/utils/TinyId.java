@@ -8,14 +8,25 @@ import java.util.List;
 
 /**
  * @author du_imba
+ *
+ * 微id工具
  */
 public class TinyId {
+    /**
+     * id生成器工厂
+     */
     private static IdGeneratorFactoryClient client = IdGeneratorFactoryClient.getInstance(null);
 
     private TinyId() {
 
     }
 
+    /**
+     * 根据业务类型获取下一个id
+     * client主要使用方式
+     * @param bizType
+     * @return
+     */
     public static Long nextId(String bizType) {
         if(bizType == null) {
             throw new IllegalArgumentException("type is null");
@@ -24,6 +35,12 @@ public class TinyId {
         return idGenerator.nextId();
     }
 
+    /**
+     * 批量获取下一个id
+     * @param bizType
+     * @param batchSize
+     * @return
+     */
     public static List<Long> nextId(String bizType, Integer batchSize) {
         if(batchSize == null) {
             Long id = nextId(bizType);

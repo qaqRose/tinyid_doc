@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 /**
  * @author du_imba
+ *
+ * http工具
  */
 public class TinyIdHttpUtils {
 
@@ -22,10 +24,26 @@ public class TinyIdHttpUtils {
 
     }
 
+    /**
+     * post 请求
+     * @param url 地址
+     * @param readTimeout 读超时
+     * @param connectTimeout 连接超时
+     * @return
+     */
     public static String post(String url, Integer readTimeout, Integer connectTimeout) {
         return post(url, null, readTimeout, connectTimeout);
     }
 
+    /**
+     * post 请求
+     * 封装jdk自带的网络请求组件
+     * @param url 地址
+     * @param form 请求参数，map
+     * @param readTimeout 读超时
+     * @param connectTimeout 连接超时
+     * @return
+     */
     public static String post(String url, Map<String, String> form, Integer readTimeout, Integer connectTimeout) {
         HttpURLConnection conn = null;
         OutputStreamWriter os = null;

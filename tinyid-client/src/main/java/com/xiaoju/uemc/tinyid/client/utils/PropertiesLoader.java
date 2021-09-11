@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 /**
  * @author du_imba
+ * 属性加载器
  */
 public class PropertiesLoader {
     private static final Logger logger = Logger.getLogger(PropertiesLoader.class.getName());
@@ -16,6 +17,12 @@ public class PropertiesLoader {
 
     }
 
+    /**
+     * 加载properties文件
+     * 通过getResourceAsStream加载classpath路径的文件
+     * @param location 本地文件地址
+     * @return
+     */
     public static Properties loadProperties(String location) {
         Properties props = new Properties();
         logger.info("Loading properties file from path:" + location);
