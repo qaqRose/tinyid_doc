@@ -13,6 +13,7 @@
 
     <properties>
         <spring.version>1.5.9.RELEASE</spring.version>
+        <knife4j.version>2.0.0</knife4j.version>
     </properties>
 
     <dependencies>
@@ -69,6 +70,13 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
